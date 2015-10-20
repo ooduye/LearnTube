@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace LearnTube\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

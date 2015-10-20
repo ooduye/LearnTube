@@ -11,6 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [
+    'uses' => '\LearnTube\Http\Controllers\HomeController@index',
+    'as'   => 'index'
+]);

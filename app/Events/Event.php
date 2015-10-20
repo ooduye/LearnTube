@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace LearnTube\Events;
 
 abstract class Event
 {
