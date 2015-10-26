@@ -23,7 +23,7 @@ Route::get('/category/{category}', '\LearnTube\Http\Controllers\HomeController@s
  */
 Route::get('/register', [
     'uses' => '\LearnTube\Http\Controllers\AuthController@getRegister',
-    'as'   => 'auth.register',
+    'as'   => 'Auth.register',
     'middleware' => ['guest']
 ]);
 
@@ -34,7 +34,7 @@ Route::post('/register', [
 
 Route::get('/signin', [
     'uses' => '\LearnTube\Http\Controllers\AuthController@getLogin',
-    'as'   => 'auth.login',
+    'as'   => 'Auth.login',
     'middleware' => ['guest']
 ]);
 
@@ -48,7 +48,7 @@ Route::get('login/{provider}/callback', 'AuthController@handleProviderCallback')
 
 Route::get('/logout', [
     'uses' => '\LearnTube\Http\Controllers\AuthController@logOut',
-    'as'   => 'auth.logout'
+    'as'   => 'Auth.logout'
 ]);
 
 Route::resource('videos', 'VideoController');

@@ -7,7 +7,7 @@
 
     <div class="row">
         <div class="col-lg-6">
-            <form class="form-vertical" role="form" method="post" action="{{ route('auth.register') }}">
+            <form class="form-vertical" role="form" method="post" action="{{ route('Auth') }}">
                 <div class="form-group{{ $errors->has('fullname') ? ' has-error' : '' }}">
                     <label for="fullname" class="control-label">Your Full Name</label>
                     <input type="text" name="fullname" class="form-control" id="fullname" value="{{ old('fullname') ?: '' }}">
