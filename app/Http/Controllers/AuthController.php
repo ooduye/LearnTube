@@ -2,7 +2,9 @@
 
 namespace LearnTube\Http\Controllers;
 
+
 use Illuminate\Support\Facades\Auth;
+use Socialite;
 use LearnTube\User;
 use Illuminate\Http\Request;
 use LearnTube\Http\Requests;
@@ -41,9 +43,12 @@ class AuthController extends Controller
             'password' => bcrypt($request->input('password'))
         ]);
 
-        return redirect()
-            ->route('index')
-            ->withInfo('Your account has been created and you can now sign in');
+        return redirect()->route('index');
+    }
+
+    public function updateUser(Request $request)
+    {
+
     }
 
     public function postLogin(Request $request)
@@ -58,7 +63,87 @@ class AuthController extends Controller
             return redirect()->back()->with('warning', 'Invalid Email or Password');
         }
 
-        return redirect()->route('index')->with('info', 'You are now signed in');
+        return redirect()->route('index');
+    }
+
+    /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return Response
+     */
+    public function handleProviderCallback($provider)
+    {
+        try {
+            $user = Socialite::driver($provider)->user();
+        } catch (Exception $e) {
+            return Redirect::to("login/$provider");
+        }
+
+        $authUser = $this->findOrCreateUser($user, $provider);
+
+        Auth::login($authUser, true);
+
+        return redirect()->route('index');
+    }
+
+    /**
+     * Return user if exists; create and return if doesn't
+     *
+     * @param $githubUser
+     * @return User
+     */
+    private function findOrCreateUser($userDetails, $provider)
+    {
+        if ($provider === "github") {
+
+            if ($authUser = User::where('github_id', $userDetails->id)->first()) {
+                return $authUser;
+
+            }
+
+            return User::create([
+                'fullname' => $userDetails->name,
+                'username' => $userDetails->nickname,
+                'email' => $userDetails->email,
+                'github_id' => $userDetails->id,
+                'avatar_url' => $userDetails->avatar
+            ]);
+        } elseif ($provider === "facebook") {
+            if ($authUser = User::where('facebook_id', $userDetails->id)->first()) {
+                return $authUser;
+            }
+
+            return User::create([
+                'fullname' => $userDetails->name,
+                'username' => $userDetails->nickname,
+                'email' => $userDetails->email,
+                'facebook_id' => $userDetails->id,
+                'avatar_url' => $userDetails->avatar
+            ]);
+
+        } elseif ($provider === "twitter") {
+            if ($authUser = User::where('twitter_id', $userDetails->id)->first()) {
+                return $authUser;
+            }
+
+            return User::create([
+                'fullname' => $userDetails->name,
+                'username' => $userDetails->nickname,
+                'email' => $userDetails->nickname,
+                'twitter_id' => $userDetails->id,
+                'avatar_url' => $userDetails->avatar
+            ]);
+        }
     }
 
     public function logOut()

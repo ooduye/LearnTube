@@ -2,6 +2,7 @@
 
 namespace LearnTube\Http\Controllers;
 
+use LearnTube\Video;
 use Illuminate\Http\Request;
 use LearnTube\Http\Requests;
 use LearnTube\Http\Controllers\Controller;
@@ -15,7 +16,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.index');
+        $videos = Video::all();
+        return view('pages.index')->withVideo($videos);
     }
 
     /**
@@ -45,9 +47,11 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($category)
     {
-        //
+        $videos = Video::where('video_category', $category)->get();
+
+        return view('pages.index')->withVideo($videos);
     }
 
     /**

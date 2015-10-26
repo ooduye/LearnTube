@@ -17,8 +17,11 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $videos = Video::personal()->get();
-        return view('videos.index')->withVideo($videos);
+        if ( Auth::check() ) {
+            $videos = Video::personal()->get();
+            return view('videos.index')->withVideo($videos);
+        }
+        return redirect()->route('auth.login');
     }
 
     /**
@@ -46,16 +49,20 @@ class VideoController extends Controller
             'category'   => 'required'
         ]);
 
+        $video_url = explode("=", trim($request->input('video-url')));
+        $video_url = $video_url["1"];
+
+
         $video = new Video;
         $video->video_title   = trim($request->input('title'));
         $video->video_category = trim($request->input('category'));
-        $video->video_url       = trim($request->input('video-url'));
+        $video->video_url       = $video_url;
         $video->video_description  = trim($request->input('description'));
         $video->user_id        = Auth::user()->id;
 
         $video->save();
 
-        return redirect()->route('videos.index')->with('info','Your Project has been created successfully');
+        return redirect()->route('videos.index');
     }
 
     /**
@@ -102,7 +109,7 @@ class VideoController extends Controller
         $values = $request->all();
         $video->fill($values)->save();
 
-        return redirect()->back()->with('info','Your Video has been updated successfully');
+        return redirect()->route('videos.index');
     }
 
     /**
@@ -113,6 +120,8 @@ class VideoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $video = Video::findOrFail($id);
+        $video->delete();
+        return redirect()->route('videos.index');
     }
 }

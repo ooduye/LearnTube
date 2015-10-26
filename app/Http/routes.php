@@ -16,30 +16,35 @@ Route::get('/', [
     'as'   => 'index'
 ]);
 
+Route::get('/category/{category}', '\LearnTube\Http\Controllers\HomeController@show');
+
 /**
  *  Authentication routes
  */
-Route::get('/auth/register', [
+Route::get('/register', [
     'uses' => '\LearnTube\Http\Controllers\AuthController@getRegister',
     'as'   => 'auth.register',
     'middleware' => ['guest']
 ]);
 
-Route::post('/auth/register', [
+Route::post('/register', [
     'uses' => '\LearnTube\Http\Controllers\AuthController@postRegister',
     'middleware' => ['guest']
 ]);
 
-Route::get('/auth/signin', [
+Route::get('/signin', [
     'uses' => '\LearnTube\Http\Controllers\AuthController@getLogin',
     'as'   => 'auth.login',
     'middleware' => ['guest']
 ]);
 
-Route::post('/auth/signin', [
+Route::post('/signin', [
     'uses' => '\LearnTube\Http\Controllers\AuthController@postLogIn',
     'middleware' => ['guest']
 ]);
+
+Route::get('login/{provider}', 'AuthController@redirectToProvider');
+Route::get('login/{provider}/callback', 'AuthController@handleProviderCallback');
 
 Route::get('/logout', [
     'uses' => '\LearnTube\Http\Controllers\AuthController@logOut',

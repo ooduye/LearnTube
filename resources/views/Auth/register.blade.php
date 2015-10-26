@@ -41,6 +41,9 @@
                 </div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>
+            <a class="btn btn-info" style="background-color: #444444" href="/login/github" role="button">Login with Github</a>
+            <a class="btn btn-info" style="background-color: #3b5998" href="/login/facebook" role="button">Login with Facebook</a>
+            <a class="btn btn-info" style="background-color: #55acee" href="/login/twitter" role="button">Login with Twitter</a>
         </div>
     </div>
 @stop

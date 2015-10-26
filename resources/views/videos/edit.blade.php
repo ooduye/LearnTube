@@ -4,10 +4,10 @@
 
     @include('layouts.partials.sidebar')
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <h1 class="page-header"> Edit Project</h1>
+        <h1 class="page-header"> Edit Video</h1>
 
         <div class="col-lg-6">
-            <form class="form-vertical" role="form" method="post" action="{{ route('videos.update', ['id' => $video->id]) }}">
+            <form class="form-vertical" role="form" method="post" action="{{ route('videos.update', $video->id) }}">
                 <div class="form-group{{ $errors->has('category') ? ' has-error' : '' }}">
                     <label for="category" class="control-label">Choose Category</label>
                     <select name="category" id="category">
@@ -158,9 +158,7 @@
                 </div>
                 <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                     <label for="description" class="control-label">Video Description</label>
-                <textarea name="description" class="form-control" id="description" rows="10" cols="10">
-                  {!! $video->video_description ?: '' !!}
-                </textarea>
+                <textarea name="description" class="form-control" id="description" rows="10" cols="10">{!! $video->video_description ?: '' !!}</textarea>
                     @if ($errors->has('description'))
                         <span class="help-block">{{ $errors->first('description') }}</span>
                     @endif
@@ -176,6 +174,7 @@
                     <button type="submit" class="btn bt">Update</button>
                 </div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                {!! method_field('PUT') !!}
             </form>
         </div>
     </div>
