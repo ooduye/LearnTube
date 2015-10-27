@@ -5,6 +5,7 @@ namespace LearnTube\Http\Controllers;
 use LearnTube\Video;
 use Illuminate\Http\Request;
 use LearnTube\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use LearnTube\Http\Controllers\Controller;
 
 class HomeController extends Controller

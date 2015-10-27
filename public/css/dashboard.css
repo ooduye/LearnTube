@@ -1,6 +1,7 @@
 body {
     margin-top: 65px;
     background-color: #f8f8f8;
+    font-family: 'Raleway', sans-serif;
 }
 
 .mynavbar {
@@ -15,6 +16,11 @@ body {
 
 .logo1 {
     width: auto;
+}
+
+.socials {
+    width: 80%;
+    margin-bottom: 5px;
 }
 
 /* Hide for mobile, show later */
@@ -83,4 +89,43 @@ body {
 
 .one-card {
     background-color: #ffffff;
+}
+
+@charset "UTF-8";
+/* CSS Document */
+
+
+
+p {
+    color:#CCC;
+}
+
+.spacing {
+    padding-top:7px;
+    padding-bottom:7px;
+}
+.middlePage {
+    width: 680px;
+    height: 600px;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.logo {
+    color:#CCC;
+}
+
+.social {
+    text-align: center;
+    margin-bottom: 5px;
+    padding-top: 2%;
+}
+
+.centered-form .panel{
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: rgba(0, 0, 0, 0.1) 3px 3px 3px;
 }

@@ -18,6 +18,10 @@ Route::get('/', [
 
 Route::get('/category/{category}', '\LearnTube\Http\Controllers\HomeController@show');
 
+Route::get('/editprofile', '\LearnTube\Http\Controllers\AuthController@edit');
+
+Route::put('editprofile', '\LearnTube\Http\Controllers\AuthController@update');
+
 /**
  *  Authentication routes
  */

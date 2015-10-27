@@ -21,7 +21,7 @@ class VideoController extends Controller
             $videos = Video::personal()->get();
             return view('videos.index')->withVideo($videos);
         }
-        return redirect()->route('Auth.login');
+        return redirect()->route('auth.login');
     }
 
     /**

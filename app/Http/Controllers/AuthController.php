@@ -19,12 +19,12 @@ class AuthController extends Controller
      */
     public function getRegister()
     {
-        return view('Auth.register');
+        return view('auth.register');
     }
 
     public function getLogin()
     {
-        return view('Auth.login');
+        return view('auth.login');
     }
 
     public function postRegister(Request $request)
@@ -46,9 +46,22 @@ class AuthController extends Controller
         return redirect()->route('index');
     }
 
-    public function updateUser(Request $request)
+    public function edit()
+    {
+        return view('auth.edit');
+    }
+
+    public function update(Request $request)
     {
 
+
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+
+        $values = $request->all();
+        $user->fill($values)->save();
+
+        return redirect()->route('videos.index');
     }
 
     public function postLogin(Request $request)
@@ -67,8 +80,9 @@ class AuthController extends Controller
     }
 
     /**
-     * Redirect the user to the GitHub authentication page.
+     * Redirect the user to the provider authentication page.
      *
+     * @param $provider
      * @return Response
      */
     public function redirectToProvider($provider)
@@ -77,8 +91,9 @@ class AuthController extends Controller
     }
 
     /**
-     * Obtain the user information from GitHub.
+     * Obtain the user information from a provider.
      *
+     * @param $provider
      * @return Response
      */
     public function handleProviderCallback($provider)
@@ -99,43 +114,19 @@ class AuthController extends Controller
     /**
      * Return user if exists; create and return if doesn't
      *
-     * @param $githubUser
+     * @param $userDetails
+     * @param $provider
      * @return User
      */
     private function findOrCreateUser($userDetails, $provider)
     {
-        if ($provider === "github") {
+        $provider_id = $provider . '_id';
 
-            if ($authUser = User::where('github_id', $userDetails->id)->first()) {
-                return $authUser;
+        if ($authUser = User::where($provider_id, $userDetails->id)->first()) {
+            return $authUser;
+        }
 
-            }
-
-            return User::create([
-                'fullname' => $userDetails->name,
-                'username' => $userDetails->nickname,
-                'email' => $userDetails->email,
-                'github_id' => $userDetails->id,
-                'avatar_url' => $userDetails->avatar
-            ]);
-        } elseif ($provider === "facebook") {
-            if ($authUser = User::where('facebook_id', $userDetails->id)->first()) {
-                return $authUser;
-            }
-
-            return User::create([
-                'fullname' => $userDetails->name,
-                'username' => $userDetails->nickname,
-                'email' => $userDetails->email,
-                'facebook_id' => $userDetails->id,
-                'avatar_url' => $userDetails->avatar
-            ]);
-
-        } elseif ($provider === "twitter") {
-            if ($authUser = User::where('twitter_id', $userDetails->id)->first()) {
-                return $authUser;
-            }
-
+        if ($provider === "twitter") {
             return User::create([
                 'fullname' => $userDetails->name,
                 'username' => $userDetails->nickname,
@@ -144,6 +135,14 @@ class AuthController extends Controller
                 'avatar_url' => $userDetails->avatar
             ]);
         }
+
+        return User::create([
+            'fullname'   => $userDetails->name,
+            'username'   => $userDetails->nickname,
+            'email'      => $userDetails->email,
+            $provider_id => $userDetails->id,
+            'avatar_url' => $userDetails->avatar
+        ]);
     }
 
     public function logOut()

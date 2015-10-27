@@ -17,12 +17,16 @@
                     <li><a href="/signin">Login</a></li>
                 @elseif( Auth::check() )
 
-                    <div class="dropdown">
+                    <div style="cursor:pointer;" class="dropdown">
+                        @if ( isset(Auth::user()->avatar_url) )
                             <img class="dropdown-toggle" type="button" data-toggle="dropdown" src="{{ Auth::user()->avatar_url }}" height="40" width="40" style="border-radius:10px;margin-top: 3px;margin-right: 20px;" />
+                        @elseif (! isset(Auth::user()->avatar_url) )
+                            <img class="dropdown-toggle" type="button" data-toggle="dropdown" src="{{ Auth::user()->getAvatarUrl() }}" height="40" width="40" style="border-radius:10px;margin-top: 3px;margin-right: 20px;" />
+                        @endif
                         <ul class="dropdown-menu">
                             <li><a href="#">Edit Account</a></li>
                             <li><a href="{{ route('videos.index') }}">My Videos</a></li>
-                            <li><a href="{{ route('Auth') }}">Sign Out</a></li>
+                            <li><a href="{{ route('auth.logout') }}">Sign Out</a></li>
                         </ul>
                     </div>
                 @endif

@@ -9,13 +9,13 @@
     <script src="//use.typekit.net/udt8boc.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
 
+    <link href='http://fonts.googleapis.com/css?family=Raleway:500' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 </head>
 <body>
 @include('includes.navbar')
 <div class="container-fluid">
-        @include('layouts.partials.alerts')
         @yield('content')
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

@@ -8,7 +8,7 @@
 
         <h1 class="page-header">
             My Videos
-            <a class="btn btn-info" href="{{ route('videos.create') }}">New Video</a>
+            <a class="btn btn-info pull-right" href="{{ route('videos.create') }}">New Video</a>
         </h1>
 
         @if( $video )

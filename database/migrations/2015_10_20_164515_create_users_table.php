@@ -16,12 +16,12 @@ class CreateUsersTable extends Migration
         {
             $table->increments('id')->unsigned();
             $table->string('username')->unique();
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->string('password');
             $table->string('fullname')->nullable();
-            $table->string('facebook_id')->unique();
-            $table->string('github_id')->unique();
-            $table->string('twitter_id')->unique();
+            $table->string('facebook_id')->unique()->nullable();
+            $table->string('github_id')->unique()->nullable();
+            $table->string('twitter_id')->unique()->nullable();
             $table->string('avatar_url')->nullable()->default(NULL);
             $table->rememberToken();
             $table->timestamps();
