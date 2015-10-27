@@ -36,12 +36,14 @@ class AuthController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        User::create([
+        $user = User::create([
             'fullname' => $request->input('fullname'),
             'email' => $request->input('email'),
             'username' => $request->input('username'),
             'password' => bcrypt($request->input('password'))
         ]);
+        
+        Auth::login($user, true);
 
         return redirect()->route('index');
     }
