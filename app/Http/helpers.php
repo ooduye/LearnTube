@@ -10,5 +10,4 @@ function getStatus($videoCategory)
             echo "<option value='{$value}'>{$value}</option>";
         }
     }
-
 }
