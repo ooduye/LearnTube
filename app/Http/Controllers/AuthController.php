@@ -42,7 +42,7 @@ class AuthController extends Controller
             'username' => $request->input('username'),
             'password' => bcrypt($request->input('password'))
         ]);
-        
+
         Auth::login($user, true);
 
         return redirect()->route('index');
