@@ -49,20 +49,31 @@ class VideoController extends Controller
             'category'   => 'required'
         ]);
 
-        $video_url = explode("=", trim($request->input('video-url')));
-        $video_url = $video_url["1"];
+        $haystacks = ['=', '/'];
 
+        foreach ($haystacks as $haystack) {
+            $video_url = substr(trim($request->input('video-url')), strrpos(trim($request->input('video-url')), $haystack, -1) + 1);
 
-        $video = new Video;
-        $video->video_title   = trim($request->input('title'));
-        $video->video_category = trim($request->input('category'));
-        $video->video_url       = $video_url;
-        $video->video_description  = trim($request->input('description'));
-        $video->user_id        = Auth::user()->id;
+            if ($this->videoExist($video_url)) {
+                $video = new Video;
+                $video->video_title = trim($request->input('title'));
+                $video->video_category = trim($request->input('category'));
+                $video->video_url = $video_url;
+                $video->video_description = trim($request->input('description'));
+                $video->user_id = Auth::user()->id;
 
-        $video->save();
-
+                $video->save();
+            }
+        }
         return redirect()->route('videos.index');
+    }
+
+    protected function videoExist($video_url)
+    {
+        $theURL = "http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=$video_url&format=json";
+        $headers = get_headers($theURL);
+
+        return (substr($headers[0], 9, 3) !== "404") ? true : false;
     }
 
     /**
