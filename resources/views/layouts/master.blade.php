@@ -12,6 +12,7 @@
     <link href='http://fonts.googleapis.com/css?family=Raleway:500' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/dashboard.css') }}">
 </head>
 <body>
 @include('includes.navbar')
@@ -19,6 +20,8 @@
         @yield('content')
 </div>
 <script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ secure_asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ secure_asset('js/bootstrap.min.js') }}"></script>
 </body>
 </html>
