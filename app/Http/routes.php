@@ -22,6 +22,10 @@ Route::get('/editprofile', '\LearnTube\Http\Controllers\AuthController@edit');
 
 Route::put('editprofile', '\LearnTube\Http\Controllers\AuthController@update');
 
+Route::delete('deleteVideo', 'VideoController@destroy');
+
+Route::put('editVideo', 'VideoController@update');
+
 /**
  *  Authentication routes
  */

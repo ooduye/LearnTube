@@ -89,27 +89,15 @@ class VideoController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $video = Video::find($id);
-        return view('videos.edit')->withVideo($video);
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $video = Video::findOrFail($id);
+        $video_id = $request['video_id'];
+        $video = Video::find($video_id);
         $this->validate($request, [
             'title'     => 'required|min:3',
             'video-url'     => 'required|min:3',
@@ -117,22 +105,36 @@ class VideoController extends Controller
             'category'   => 'required'
         ]);
 
-        $values = $request->all();
-        $video->fill($values)->save();
+        $haystacks = ['=', '/'];
 
-        return redirect()->route('videos.index');
+        foreach ($haystacks as $haystack) {
+            $video_url = substr(trim($request['video-url']), strrpos(trim($request['video-url']), $haystack, -1) + 1);
+
+            if ($this->videoExist($video_url)) {
+                $video->video_url = $video_url;
+            }
+        }
+
+        $video->video_title = $request['title'];
+        $video->video_category = $request['category'];
+        $video->video_description = $request['description'];
+        $video->save();
+
+        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $video = Video::findOrFail($id);
-        $video->delete();
+        $video_id = $request['video_id'];
+
+        Video::destroy($video_id);
+
         return redirect()->route('videos.index');
     }
 }
