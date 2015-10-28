@@ -38,7 +38,7 @@ Now you are set up and ready to run.
 - Browse videos by category
 - View single video
 
-You can visit [LearnTube demo page](learntube.heroku.com/) to view the project demo.
+You can visit [LearnTube demo page](http://learntube.heroku.com/) to view the project demo.
 
 ## Change log
 
