@@ -138,6 +138,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Illuminate\Html\HtmlServiceProvider::class,
+        JD\Cloudder\CloudderServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -198,7 +199,7 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'Form' => Illuminate\Html\FormFacade::class,
-
+        'Cloudder' => JD\Cloudder\Facades\Cloudder::class,
 
 
     ],

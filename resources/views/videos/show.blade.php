@@ -17,7 +17,7 @@
                 @if ( isset(Auth::user()->id) )
                     @if (Auth::user()->id === $video->user_id)
                         <div class="pull-right">
-                            <a data-toggle="modal" data-target="#editModal-{{ $video->id  }}"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a data-toggle="modal" data-target="#editModal-{{ $video->id  }}"><i class="glyphicon glyphicon-edit" style="cursor:pointer;"></i></a>
 
                             <!-- Edit Modal -->
                             <div id="editModal-{{ $video->id }}" class="modal fade" role="dialog">

@@ -5,6 +5,7 @@ namespace LearnTube\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Socialite;
+use Cloudder;
 use LearnTube\User;
 use Illuminate\Http\Request;
 use LearnTube\Http\Requests;
@@ -55,13 +56,19 @@ class AuthController extends Controller
 
     public function update(Request $request)
     {
-
-
         $user_id = Auth::user()->id;
         $user = User::find($user_id);
 
-        $values = $request->all();
-        $user->fill($values)->save();
+        if ( isset( $request['avatar_url'] ) ){
+            Cloudder::upload($request['avatar_url']);
+            $user->avatar_url = Cloudder::getResult()['url'];
+        }
+        $user->fullname = $request['fullname'];
+        $user->username = $request['username'];
+        $user->email = $request['email'];
+
+
+        $user->save();
 
         return redirect()->route('videos.index');
     }

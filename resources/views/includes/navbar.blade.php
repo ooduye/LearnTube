@@ -25,7 +25,7 @@
                         @endif
                         <ul class="dropdown-menu">
                             <li style="text-align: center; color: #00aee8"> @ {{ Auth::user()->username }}</li>
-                            <li><a href="#">Edit Account</a></li>
+                            <li><a href="/editprofile">Edit Account</a></li>
                             <li><a href="{{ route('videos.index') }}">My Videos</a></li>
                             <li><a href="{{ route('auth.logout') }}">Sign Out</a></li>
                         </ul>
