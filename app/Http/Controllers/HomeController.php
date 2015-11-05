@@ -22,9 +22,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
+     * @param $category
      * @return \Illuminate\Http\Response
      */
     public function show($category)
